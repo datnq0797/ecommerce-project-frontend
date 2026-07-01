@@ -1,7 +1,9 @@
-import { useState } from 'react'
-import Home from './components/Home'
-import Shop from './components/Shop'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useState } from 'react';
+import Home from './components/Home';
+import Shop from './components/Shop';
+import Login from './components/admin/Login';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 function App() {
  
   return (
@@ -10,8 +12,10 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/admin/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </>
   )
 }
