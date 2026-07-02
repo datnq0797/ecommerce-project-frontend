@@ -1,8 +1,9 @@
 import React from 'react';
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Layout from '../common/Layout';
-import {apiUrl} from '../common/http';
-import{toast} from 'react-toastify';
+import { apiUrl } from '../common/http';
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
     const {
         register,
@@ -10,19 +11,33 @@ const Login = () => {
         watch,
         formState: { errors },
     } = useForm();
+    const navigate = useNavigate();
     const onSubmit = async (data) => {
         console.log(data);
-        const res = await  fetch(`${apiUrl}/admin/login`, {
-            method:'POST',
+        const res = await fetch(`${apiUrl}/admin/login`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(res => res.json()).then(data => {console.log(data)
-            if(result.status == 200){
-                localStorage.setItem('token', data.token);
-                window.location.href = '/admin/dashboard';
-            }else{
+        }).then(res => res.json()).then(result => {
+            console.log(result)
+            if (result.errors.email) {
+                toast.error(result.errors.email[0]);
+            }
+
+            if (result.errors.password) {
+                toast.error(result.errors.password[0]);
+            }
+            if (result.status == 200) {
+                const adminInfo = {
+                    token: result.token,
+                    id: result.id,
+                    name: result.name
+                }
+                localStorage.setItem('adminInfo', JSON.stringify(adminInfo));
+                navigate('/admin/dashboard');
+            } else {
                 toast.error(result.message);
             }
         });
