@@ -4,7 +4,10 @@ import Layout from '../common/Layout';
 import { apiUrl } from '../common/http';
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AdminAuthContext } from "../context/AdminAuth";
 const Login = () => {
+    const {login} = useContext(AdminAuthContext);
     const {
         register,
         handleSubmit,
@@ -22,11 +25,11 @@ const Login = () => {
             body: JSON.stringify(data)
         }).then(res => res.json()).then(result => {
             console.log(result)
-            if (result.errors.email) {
+            if (result.errors?.email) {
                 toast.error(result.errors.email[0]);
             }
 
-            if (result.errors.password) {
+            if (result.errors?.password) {
                 toast.error(result.errors.password[0]);
             }
             if (result.status == 200) {
@@ -36,6 +39,7 @@ const Login = () => {
                     name: result.name
                 }
                 localStorage.setItem('adminInfo', JSON.stringify(adminInfo));
+                login(adminInfo);
                 navigate('/admin/dashboard');
             } else {
                 toast.error(result.message);

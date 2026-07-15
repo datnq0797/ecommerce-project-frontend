@@ -7,4 +7,5 @@ export const AdminRequireAuth = ({ children }) => {
     if(!user){
         return <Navigate to="/admin/login" />
     }
+    return children;
 }
