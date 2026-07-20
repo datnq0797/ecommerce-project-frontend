@@ -12,10 +12,19 @@ const Sidebar = () => {
                         <a href="/admin/dashboard">Dashboard</a>
                     </li>
                     <li>
-                        <a href="/admin/categories">Categories</a>
+                        <Link to="/admin/categories">Categories</Link>
                     </li>
                     <li>
                         <a href="">Brands</a>
+                    </li>
+                     <li>
+                        <a href="">Products</a>
+                    </li>
+                     <li>
+                        <a href="">Orders</a>
+                    </li>
+                     <li>
+                        <a href="">User</a>
                     </li>
                 </ul>
             </div>
